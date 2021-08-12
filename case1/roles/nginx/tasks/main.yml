@@ -1,0 +1,29 @@
+---
+
+- name: ansible create directory example
+  file:
+    path: /log/nginx
+    state: directory
+
+- name: Create nginx container
+  docker_container:
+    name: nginx
+    image: nginx
+    state: started
+    recreate: yes
+    published_ports:
+      - 8080:80
+    volumes:
+      - /log/nginx:/var/log/nginx
+
+- name: Install logrotate
+  package: 
+    name: logrotate
+    state: present
+
+- name: Copy Logrotate File to Host
+  copy:
+    src: container-nginx
+    dest: /etc/logrotate.d/container-nginx
+
+

@@ -1,0 +1,7 @@
+/log/nginx/*.log {
+  daily
+  size 100M
+  rotate 0
+  missingok
+  notifempty
+}
